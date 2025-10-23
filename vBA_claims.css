@@ -1,0 +1,186 @@
+.dashboard-container {
+    padding: 1.5rem 2rem;
+    background-color: #f7f9fc;
+    font-family: "Salesforce Sans", Arial, sans-serif;
+}
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #007bff;
+}
+
+.filter-row {
+    margin-bottom: 2rem;
+}
+
+.merged-pill-tabs {
+    display: flex;
+    border: 1.5px solid #007bff;
+    border-radius: 24px;
+    overflow: hidden;
+    height: 38px;
+}
+
+.pill-segments-container {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.pill-segment-container {
+    flex-shrink: 0;
+}
+
+.pill-segment {
+    border-radius: 0;
+    font-weight: 600;
+    min-width: 90px;
+    white-space: nowrap;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Rounded edges for first and last segment */
+.first .pill-segment {
+    border-top-left-radius: 24px;
+    border-bottom-left-radius: 24px;
+}
+
+.last .pill-segment {
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
+}
+
+/* Active tab button styling */
+.pill-segment[variant='brand'] {
+    background: #007bff;
+    color: white;
+}
+
+.search-wrapper {
+    min-width: 200px;
+    width: 180px;
+}
+
+.new-claim-btn {
+    min-width: 160px;
+    font-weight: 600;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #1c2b3a;
+}
+
+.claim-card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    min-height: 210px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.claim-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.claim-type {
+    font-weight: 600;
+}
+
+.claim-number {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.claim-details {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.95rem;
+    gap: 0.2rem;
+}
+
+.claim-detail-row {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.badge {
+    background-color: #f0f4ff;
+    color: #0056d2;
+    padding: 0.2rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.completed {
+    color: #0c8b35;
+}
+
+.slds-button_pill {
+    border-radius: 20px !important;
+    padding: 0.5rem 1.5rem !important;
+    font-weight: 600;
+}
+
+.actions-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.icon-inline {
+    margin-right: 3px;
+}
+
+@media (max-width: 950px) {
+    .filter-row {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .search-wrapper {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .search-input {
+        width: 100%;
+        min-width: unset;
+    }
+}
+
+@media (max-width: 600px) {
+    .dashboard-container {
+        padding: 0.5rem;
+    }
+
+    .title {
+        font-size: 1.2rem;
+    }
+
+    .claim-card {
+        padding: 1rem;
+    }
+}

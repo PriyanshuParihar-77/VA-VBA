@@ -1,0 +1,198 @@
+<template>
+    <!-- Root element must be a standard HTML tag (div). -->
+    <div class="dashboard-container">
+        
+        <!-- Root Layout for the entire dashboard content -->
+        <!-- Removed slds-p-around_medium and slds-grid_vertical from this component 
+             to avoid potential Locker conflicts. Padding is handled by the root div class. -->
+        <lightning-layout multiple-rows="true">
+
+            <!-- 1. Header Row Container (12/12 size) -->
+            <lightning-layout-item class="slds-size_12-of-12">
+                <lightning-layout horizontal-align="space" vertical-align="center" class="slds-m-bottom_large header-row">
+                    <lightning-layout-item>
+                        <h1 class="title">Claims</h1>
+                    </lightning-layout-item>
+                    <lightning-layout-item>
+                        <button class="slds-button slds-button_brand slds-button_pill new-claim-btn"
+                                onclick={handleNewClaimClick}
+                                title="Start a New Claim">
+                            Start a New Claim
+                        </button>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+
+
+            <!-- 2. Filter Row Container (12/12 size) -->
+            <lightning-layout-item class="slds-size_12-of-12">
+                <lightning-layout class="filter-row slds-m-bottom_x-large" multiple-rows="true" horizontal-align="space">
+                    <!-- Pill Tabs -->
+                    <lightning-layout-item class="pill-tabs-wrapper slds-size_12-of-12 slds-medium-size_8-of-12 slds-large-size_7-of-12"
+                                        padding="horizontal-small" flexibility="auto">
+                        <div class="merged-pill-tabs">
+                            <lightning-layout horizontal-align="stretch" vertical-align="center" class="pill-segments-container">
+                                <lightning-layout-item flexibility="grow" class="first">
+                                    <lightning-button variant={allVariant} label="All"
+                                                      data-value="all" onclick={handleTabClick}
+                                                      class="pill-segment"></lightning-button>
+                                </lightning-layout-item>
+
+                                <lightning-layout-item flexibility="grow">
+                                    <lightning-button variant={inProgressVariant} label="In Progress"
+                                                      data-value="inprogress" onclick={handleTabClick}
+                                                      class="pill-segment"></lightning-button>
+                                </lightning-layout-item>
+
+                                <lightning-layout-item flexibility="grow">
+                                    <lightning-button variant={activeVariant} label="Active"
+                                                      data-value="active" onclick={handleTabClick}
+                                                      class="pill-segment"></lightning-button>
+                                </lightning-layout-item>
+
+                                <lightning-layout-item flexibility="grow" class="last">
+                                    <lightning-button variant={completedVariant} label="Completed"
+                                                      data-value="completed" onclick={handleTabClick}
+                                                      class="pill-segment"></lightning-button>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </div>
+                    </lightning-layout-item>
+
+                    <!-- Search Input -->
+                    <lightning-layout-item padding="horizontal-small"
+                                        class="search-wrapper slds-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_5-of-12"
+                                        flexibility="no-shrink">
+                        <lightning-input type="search" label="Search Claims" variant="label-hidden"
+                                        placeholder="Search Claims" class="search-input"
+                                        onchange={handleSearchChange}>
+                        </lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+
+            <!-- 3. Claims in Progress Section Container (12/12 size) -->
+            <lightning-layout-item class="slds-size_12-of-12">
+                <template if:true={showClaimsInProgress}>
+                    <section class="section slds-m-bottom_x-large" aria-labelledby="claimsInProgressTitle">
+                        <h2 id="claimsInProgressTitle" class="section-title">Claims in Progress</h2>
+                        <lightning-layout multiple-rows class="slds-grid">
+                            <template for:each={claimsInProgress} for:item="claim">
+                                <lightning-layout-item key={claim.id} size="12"
+                                                    small-device-size="12" medium-device-size="6"
+                                                    large-device-size="3" class="slds-p-around_small">
+                                    <article class="claim-card in-progress-card">
+                                        <div class="claim-header">
+                                            <p class="claim-type">{claim.type}</p>
+                                            <span class="badge draft-badge">Draft</span>
+                                        </div>
+                                        <h3 class="claim-number slds-text-heading_medium">{claim.number}</h3>
+                                        <div class="claim-details">
+                                            <div class="claim-detail-row">
+                                                <lightning-icon icon-name="utility:event" size="x-small"
+                                                                class="icon-inline"></lightning-icon>
+                                                <span>{claim.date}</span>
+                                            </div>
+                                            <div class="claim-detail-row">
+                                                <lightning-icon icon-name="utility:info_alt" size="x-small"
+                                                                class="icon-inline"></lightning-icon>
+                                                <span>{claim.status}</span>
+                                            </div>
+                                        </div>
+                                        <button class="slds-button slds-button_neutral slds-button_stretch action-btn slds-m-top_medium"
+                                                data-claim-id={claim.id}
+                                                onclick={handleContinueClaim}>Continue Claim</button>
+                                    </article>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                    </section>
+                </template>
+            </lightning-layout-item>
+
+            <!-- 4. Active Claims Section Container (12/12 size) -->
+            <lightning-layout-item class="slds-size_12-of-12">
+                <template if:true={showActiveClaims}>
+                    <section class="section slds-m-bottom_x-large" aria-labelledby="activeClaimsTitle">
+                        <h2 id="activeClaimsTitle" class="section-title">Active Claims</h2>
+                        <lightning-layout multiple-rows class="slds-grid">
+                            <template for:each={activeClaims} for:item="claim">
+                                <lightning-layout-item key={claim.id} size="12"
+                                                    small-device-size="12" medium-device-size="6"
+                                                    large-device-size="3" class="slds-p-around_small">
+                                    <article class="claim-card active-card">
+                                        <div class="claim-header"><p class="claim-type">{claim.type}</p></div>
+                                        <h3 class="claim-number slds-text-heading_medium">{claim.number}</h3>
+                                        <div class="claim-details">
+                                            <div class="claim-detail-row">
+                                                <lightning-icon icon-name="utility:event" size="x-small"
+                                                                class="icon-inline"></lightning-icon>
+                                                <span>{claim.date}</span>
+                                            </div>
+                                            <div class="claim-detail-row">
+                                                <lightning-icon icon-name="utility:info_alt" size="x-small"
+                                                                class="icon-inline"></lightning-icon>
+                                                <span>{claim.status}</span>
+                                            </div>
+                                        </div>
+                                        <button class="slds-button slds-button_neutral slds-button_stretch action-btn slds-m-top_medium"
+                                                data-claim-id={claim.id}
+                                                onclick={handleViewClaimDetails}>View Claim Details</button>
+                                    </article>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                    </section>
+                </template>
+            </lightning-layout-item>
+
+            <!-- 5. Completed Claims Section Container (12/12 size) -->
+            <lightning-layout-item class="slds-size_12-of-12">
+                <template if:true={showCompletedClaims}>
+                    <section class="section slds-m-bottom_x-large" aria-labelledby="completedClaimsTitle">
+                        <h2 id="completedClaimsTitle" class="section-title">Completed Claims</h2>
+                        <lightning-layout multiple-rows class="slds-grid">
+                            <template for:each={completedClaims} for:item="claim">
+                                <lightning-layout-item key={claim.id} size="12"
+                                                    small-device-size="12" medium-device-size="6"
+                                                    large-device-size="3" class="slds-p-around_small">
+                                    <article class="claim-card completed-card">
+                                        <div class="claim-header"><p class="claim-type">{claim.type}</p></div>
+                                        <h3 class="claim-number slds-text-heading_medium">{claim.number}</h3>
+                                        <div class="claim-details">
+                                            <div class="claim-detail-row">
+                                                <lightning-icon icon-name="utility:event" size="x-small"
+                                                                class="icon-inline"></lightning-icon>
+                                                <span>{claim.date}</span>
+                                            </div>
+                                            <div class="claim-detail-row completed-status">
+                                                <lightning-icon icon-name="utility:success" size="x-small"
+                                                                class="icon-inline completed-icon"></lightning-icon>
+                                                <span>Completed</span>
+                                            </div>
+                                        </div>
+                                        <div class="actions-column slds-m-top_medium">
+                                            <button class="slds-button slds-button_neutral slds-button_stretch action-btn"
+                                                    data-claim-id={claim.id}
+                                                    onclick={handleViewClaimDetails}>View Claim Details</button>
+                                            <button class="slds-button slds-button_neutral slds-button_stretch action-btn"
+                                                    data-claim-id={claim.id}
+                                                    onclick={handleFileIncrease}>File for Claim Increase</button>
+                                            <button class="slds-button slds-button_neutral slds-button_stretch action-btn"
+                                                    data-claim-id={claim.id}
+                                                    onclick={handleAppealClaim}>Appeal Claim</button>
+                                            <button class="slds-button slds-button_neutral slds-button_stretch action-btn"
+                                                    data-claim-id={claim.id}
+                                                    onclick={handleHighLevelReview}>High Level Review</button>
+                                        </div>
+                                    </article>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                    </section>
+                </template>
+            </lightning-layout-item>
+
+        </lightning-layout>
+    </div>
+</template>

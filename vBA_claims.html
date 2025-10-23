@@ -1,0 +1,160 @@
+<template>
+    <div class="dashboard-container">
+        <!-- Header: Claims and New Claim button -->
+        <div class="header-row">
+            <h1 class="title">Claims</h1>
+            <button class="slds-button slds-button_brand slds-button_pill new-claim-btn">
+                Start a New Claim
+            </button>
+        </div>
+
+        <!-- Filter row: merged pill tabs and search input -->
+        <lightning-layout class="filter-row" horizontal-align="spread" vertical-align="center">
+            <lightning-layout-item class="merged-pill-tabs" padding="around-small" flexibility="auto">
+                <lightning-layout horizontal-align="stretch" vertical-align="center" multiple-rows="false" class="pill-segments-container">
+                    <lightning-layout-item class="pill-segment-container first" flexibility="auto">
+                        <lightning-button variant={allVariant}
+                                          label="All"
+                                          data-value="all"
+                                          onclick={handleTabClick}
+                                          class="pill-segment no-radius-right"
+                                          title="All"></lightning-button>
+                    </lightning-layout-item>
+                    <lightning-layout-item class="pill-segment-container" flexibility="auto">
+                        <lightning-button variant={inProgressVariant}
+                                          label="In Progress"
+                                          data-value="inprogress"
+                                          onclick={handleTabClick}
+                                          class="pill-segment no-radius"
+                                          title="In Progress"></lightning-button>
+                    </lightning-layout-item>
+                    <lightning-layout-item class="pill-segment-container" flexibility="auto">
+                        <lightning-button variant={activeVariant}
+                                          label="Active"
+                                          data-value="active"
+                                          onclick={handleTabClick}
+                                          class="pill-segment no-radius"
+                                          title="Active"></lightning-button>
+                    </lightning-layout-item>
+                    <lightning-layout-item class="pill-segment-container last" flexibility="auto">
+                        <lightning-button variant={completedVariant}
+                                          label="Completed"
+                                          data-value="completed"
+                                          onclick={handleTabClick}
+                                          class="pill-segment no-radius-left"
+                                          title="Completed"></lightning-button>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+
+            <lightning-layout-item padding="around-small" class="search-wrapper" flexibility="auto" size="4" medium-device-size="6" small-device-size="12">
+                <lightning-input type="search"
+                                 label="Search Claims"
+                                 variant="label-hidden"
+                                 placeholder="Search Claims"
+                                 class="search-input">
+                </lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <!-- Claims In Progress Section -->
+        <template if:true={showClaimsInProgress}>
+            <section class="section">
+                <h2 class="section-title">Claims in Progress</h2>
+                <lightning-layout multiple-rows>
+                    <template for:each={claimsInProgress} for:item="claim">
+                        <lightning-layout-item key={claim.id} size="3" small-device-size="12" medium-device-size="6" large-device-size="3" padding="around-small">
+                            <div class="claim-card">
+                                <div class="claim-header">
+                                    <p class="claim-type">{claim.type}</p>
+                                    <span class="badge">Draft</span>
+                                </div>
+                                <h3 class="claim-number">{claim.number}</h3>
+                                <div class="claim-details">
+                                    <div class="claim-detail-row">
+                                        <lightning-icon icon-name="utility:event" size="x-small" class="icon-inline"></lightning-icon>
+                                        <span>{claim.date}</span>
+                                    </div>
+                                    <div class="claim-detail-row">
+                                        <lightning-icon icon-name="utility:info_alt" size="x-small" class="icon-inline"></lightning-icon>
+                                        <span>{claim.status}</span>
+                                    </div>
+                                </div>
+                                <button class="slds-button slds-button_neutral slds-button_pill outline-btn">
+                                    Continue Claim
+                                </button>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </section>
+        </template>
+
+        <!-- Active Claims Section -->
+        <template if:true={showActiveClaims}>
+            <section class="section">
+                <h2 class="section-title">Active Claims</h2>
+                <lightning-layout multiple-rows>
+                    <template for:each={activeClaims} for:item="claim">
+                        <lightning-layout-item key={claim.id} size="3" small-device-size="12" medium-device-size="6" large-device-size="3" padding="around-small">
+                            <div class="claim-card">
+                                <div class="claim-header">
+                                    <p class="claim-type">{claim.type}</p>
+                                </div>
+                                <h3 class="claim-number">{claim.number}</h3>
+                                <div class="claim-details">
+                                    <div class="claim-detail-row">
+                                        <lightning-icon icon-name="utility:event" size="x-small" class="icon-inline"></lightning-icon>
+                                        <span>{claim.date}</span>
+                                    </div>
+                                    <div class="claim-detail-row">
+                                        <lightning-icon icon-name="utility:info_alt" size="x-small" class="icon-inline"></lightning-icon>
+                                        <span>{claim.status}</span>
+                                    </div>
+                                </div>
+                                <button class="slds-button slds-button_neutral slds-button_pill outline-btn">
+                                    View Claim Details
+                                </button>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </section>
+        </template>
+
+        <!-- Completed Claims Section -->
+        <template if:true={showCompletedClaims}>
+            <section class="section">
+                <h2 class="section-title">Completed Claims</h2>
+                <lightning-layout multiple-rows>
+                    <template for:each={completedClaims} for:item="claim">
+                        <lightning-layout-item key={claim.id} size="3" small-device-size="12" medium-device-size="6" large-device-size="3" padding="around-small">
+                            <div class="claim-card">
+                                <div class="claim-header">
+                                    <p class="claim-type">{claim.type}</p>
+                                </div>
+                                <h3 class="claim-number">{claim.number}</h3>
+                                <div class="claim-details">
+                                    <div class="claim-detail-row">
+                                        <lightning-icon icon-name="utility:event" size="x-small" class="icon-inline"></lightning-icon>
+                                        <span>{claim.date}</span>
+                                    </div>
+                                    <div class="claim-detail-row completed">
+                                        <lightning-icon icon-name="utility:success" size="x-small" class="icon-inline"></lightning-icon>
+                                        <span>Completed</span>
+                                    </div>
+                                </div>
+                                <div class="actions-column">
+                                    <button class="slds-button slds-button_neutral slds-button_pill outline-btn">View Claim Details</button>
+                                    <button class="slds-button slds-button_neutral slds-button_pill outline-btn">File for Claim Increase</button>
+                                    <button class="slds-button slds-button_neutral slds-button_pill outline-btn">Appeal Claim</button>
+                                    <button class="slds-button slds-button_neutral slds-button_pill outline-btn">High Level Review</button>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </section>
+        </template>
+    </div>
+</template>
