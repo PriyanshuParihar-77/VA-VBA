@@ -1,26 +1,36 @@
+
 import { LightningElement, track } from 'lwc';
 
 // Renamed class to Va_claims, as requested for this component.
 export default class Va_claims extends LightningElement {
     @track activeTab = 'all';
 
+    // Define base and active CSS classes for the custom buttons
+    PILL_CLASS = 'pill-segment';
+    ACTIVE_CLASS = 'active';
+
     handleTabClick(event) {
         this.activeTab = event.currentTarget.dataset.value; 
         console.log('Active Tab changed to: ' + this.activeTab);
     }
 
-    get allVariant() {
-        return this.activeTab === 'all' ? 'brand' : 'neutral';
+    // --- UPDATED GETTERS for custom button CSS classes ---
+    // These return the full CSS class string based on the active tab state.
+    
+    get allClass() {
+        return this.activeTab === 'all' ? `${this.PILL_CLASS} ${this.ACTIVE_CLASS}` : this.PILL_CLASS;
     }
-    get inProgressVariant() {
-        return this.activeTab === 'inprogress' ? 'brand' : 'neutral';
+    get inProgressClass() {
+        return this.activeTab === 'inprogress' ? `${this.PILL_CLASS} ${this.ACTIVE_CLASS}` : this.PILL_CLASS;
     }
-    get activeVariant() {
-        return this.activeTab === 'active' ? 'brand' : 'neutral';
+    get activeClass() {
+        return this.activeTab === 'active' ? `${this.PILL_CLASS} ${this.ACTIVE_CLASS}` : this.PILL_CLASS;
     }
-    get completedVariant() {
-        return this.activeTab === 'completed' ? 'brand' : 'neutral';
+    get completedClass() {
+        return this.activeTab === 'completed' ? `${this.PILL_CLASS} ${this.ACTIVE_CLASS}` : this.PILL_CLASS;
     }
+    // --- END UPDATED GETTERS ---
+
 
     get showClaimsInProgress() {
         return this.activeTab === 'all' || this.activeTab === 'inprogress';
