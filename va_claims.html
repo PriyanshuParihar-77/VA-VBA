@@ -32,28 +32,33 @@
                                         padding="horizontal-small" flexibility="auto">
                         <div class="merged-pill-tabs">
                             <lightning-layout horizontal-align="stretch" vertical-align="center" class="pill-segments-container">
+                                
+                                <!-- Changed to standard HTML button with dynamic class binding (get allClass) -->
                                 <lightning-layout-item flexibility="grow" class="first">
-                                    <lightning-button variant={allVariant} label="All"
-                                                      data-value="all" onclick={handleTabClick}
-                                                      class="pill-segment"></lightning-button>
+                                    <button class={allClass} 
+                                            data-value="all" onclick={handleTabClick}
+                                            title="All">All</button>
                                 </lightning-layout-item>
 
+                                <!-- Changed to standard HTML button with dynamic class binding (get inProgressClass) -->
                                 <lightning-layout-item flexibility="grow">
-                                    <lightning-button variant={inProgressVariant} label="In Progress"
-                                                      data-value="inprogress" onclick={handleTabClick}
-                                                      class="pill-segment"></lightning-button>
+                                    <button class={inProgressClass} 
+                                            data-value="inprogress" onclick={handleTabClick}
+                                            title="In Progress">In Progress</button>
                                 </lightning-layout-item>
 
+                                <!-- Changed to standard HTML button with dynamic class binding (get activeClass) -->
                                 <lightning-layout-item flexibility="grow">
-                                    <lightning-button variant={activeVariant} label="Active"
-                                                      data-value="active" onclick={handleTabClick}
-                                                      class="pill-segment"></lightning-button>
+                                    <button class={activeClass} 
+                                            data-value="active" onclick={handleTabClick}
+                                            title="Active">Active</button>
                                 </lightning-layout-item>
 
+                                <!-- Changed to standard HTML button with dynamic class binding (get completedClass) -->
                                 <lightning-layout-item flexibility="grow" class="last">
-                                    <lightning-button variant={completedVariant} label="Completed"
-                                                      data-value="completed" onclick={handleTabClick}
-                                                      class="pill-segment"></lightning-button>
+                                    <button class={completedClass} 
+                                            data-value="completed" onclick={handleTabClick}
+                                            title="Completed">Completed</button>
                                 </lightning-layout-item>
                             </lightning-layout>
                         </div>
