@@ -1,0 +1,144 @@
+.page-container {
+    padding: 1.5rem;
+    background-color: #f9fbfd;
+    font-family: 'Salesforce Sans', Arial, sans-serif;
+}
+
+.header-section {
+    margin-bottom: 1.5rem;
+}
+
+.back-link {
+    color: #0070d2;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+}
+
+.title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.subtitle {
+    color: #0070d2;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Intro text is now standard block flow */
+.intro-text {
+    color: #555;
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+    max-width: 700px;
+}
+
+/* Begin Application Button Styling */
+.begin-btn {
+    /* Brand Color */
+    --slds-c-button-brand-color-background: #106fcc;
+    --slds-c-button-brand-color-border: #106fcc;
+    --slds-c-button-brand-color-background-hover: #004aad;
+    --slds-c-button-brand-color-border-hover: #004aad;
+    
+    /* Curvy Edges */
+    --slds-c-button-radius-border: 2rem; 
+    
+    /* Spacing below button (before time text) */
+    margin-bottom: 0.8rem; 
+    margin-right: 0; /* Ensures it is left-aligned */
+    
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* Estimated Time Styling (Vertical Flow, with Icon) */
+.estimated-time-text {
+    font-size: 0.9rem;
+    color: #555;
+    display: flex; /* Needed for icon alignment */
+    align-items: center;
+    margin-bottom: 1.5rem; /* Space before the steps card */
+    margin-top: 0;
+}
+
+/* Styling the clock symbol */
+.estimated-time-symbol {
+    font-size: 1rem;
+    line-height: 1;
+    margin-right: 0.3rem;
+    color: #555; 
+}
+
+/* Steps List Container */
+.steps-card {
+    background: #fff;
+    border-radius: 0.8rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 0 1.5rem;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.step:last-child {
+    border-bottom: none;
+}
+
+/* Step Number Circle (Hollow Style) */
+.step-number {
+    background-color: white; 
+    color: #106fcc; 
+    border: 1px solid #106fcc; 
+    font-weight: bold;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    line-height: 27px; 
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.step-details {
+    flex: 1;
+}
+
+.step-title {
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.1rem;
+}
+
+.step-desc {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.footer-btn {
+    margin-top: 2rem;
+}
+
+/* Responsive Fixes */
+@media screen and (max-width: 600px) {
+    .page-container {
+        padding: 1rem;
+    }
+    
+    .begin-btn {
+        width: 100%;
+        margin-right: 0; 
+    }
+    
+    .steps-card {
+        padding: 0 1rem;
+    }
+}
